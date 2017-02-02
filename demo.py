@@ -1,11 +1,21 @@
-from sklearn import tree
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
 
-clf = tree.DecisionTreeClassifier()
+names = [
+	"Nearest Neighbors",
+	"Naive Bayes",
+	"Neural Net"
+]
 
-# CHALLENGE - create 3 more classifiers...
-# 1
-# 2
-# 3
+clfs = [
+	KNeighborsClassifier(3),
+	GaussianNB(),
+	MLPClassifier(alpha=1)]
 
 # [height, weight, shoe_size]
 X = [[181, 80, 44], [177, 70, 43], [160, 60, 38], [154, 54, 37], [166, 65, 40],
@@ -15,12 +25,10 @@ X = [[181, 80, 44], [177, 70, 43], [160, 60, 38], [154, 54, 37], [166, 65, 40],
 Y = ['male', 'male', 'female', 'female', 'male', 'male', 'female', 'female',
      'female', 'male', 'male']
 
-
-# CHALLENGE - ...and train them on our data
-clf = clf.fit(X, Y)
-
-prediction = clf.predict([[190, 70, 43]])
-
-# CHALLENGE compare their reusults and print the best one!
-
-print(prediction)
+i = 0
+# iterate over classifiers
+for clf in clfs:
+	clf = clf.fit(X, Y)
+	prediction = clf.predict([[190, 70, 43]])
+	print("the predicton for %s is %s"%(names[i],prediction))
+	i = i + 1
